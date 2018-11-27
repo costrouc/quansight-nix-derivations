@@ -1,0 +1,41 @@
+{ pkgs ? import <nixpkgs> { }, pythonPackages ? pkgs.python36Packages }:
+
+rec {
+  uarray = pythonPackages.buildPythonPackage rec {
+    name = "uarray";
+    format = "flit";
+    disabled = pythonPackages.isPy37;
+
+    src = with builtins; filterSource
+        (path: _:
+           !elem (baseNameOf path) [".git"])
+           ../../uarray;
+
+    checkInputs = with pythonPackages; [
+      pytest nbval pytestcov numba mypy
+    ];
+    propagatedBuildInputs = with pythonPackages; [
+      matchpy numpy astunparse typing-extensions black
+    ];
+
+    checkPhase = ''
+      mypy uarray
+      ${pythonPackages.python.interpreter} extract_readme_tests.py
+      pytest
+    '';
+
+    meta = with pkgs.lib; {
+      description = "Universal array library";
+      homepage = https://github.com/Quansight-Labs/uarray;
+      license = licenses.bsd0;
+      maintainers = [ maintainers.costrouc ];
+    };
+  };
+
+  uarray-notebooks = pkgs.mkShell {
+    buildInputs = with pythonPackages; [
+      black pylint jupyterlab pudb flake8 perf altair pandas # pandoc pypandoc # dev-requirements.txt
+      matchpy numba mypy pytestcov pytest numpy astunparse typing-extensions nbval pytest-mypy flit # requirements.txt
+    ];
+  };
+}
