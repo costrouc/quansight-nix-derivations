@@ -1,10 +1,9 @@
-{ pkgs ? import <nixpkgs> { }, pythonPackages ? pkgs.python36Packages }:
+{ pkgs ? import <nixpkgs> { }, pythonPackages ? pkgs.python3Packages }:
 
 rec {
   uarray = pythonPackages.buildPythonPackage rec {
     name = "uarray";
     format = "flit";
-    disabled = pythonPackages.isPy37;
 
     src = with builtins; filterSource
         (path: _:

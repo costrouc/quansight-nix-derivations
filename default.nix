@@ -1,5 +1,5 @@
 { pkgs ? import <nixpkgs> { }
-, pythonVersion ? "36"
+, pythonVersion ? "37"
 }:
 
 let
