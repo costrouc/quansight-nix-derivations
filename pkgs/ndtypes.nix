@@ -8,7 +8,7 @@ let packageMeta = with pkgs.lib; {
 
     ndtypesSrc = with builtins; filterSource
         (path: _:
-           !elem (baseNameOf path) [".git" "result" ".nix"])
+           !elem (baseNameOf path) [".git"])
         ../../ndtypes;
 in
 rec {
@@ -49,6 +49,27 @@ rec {
     '';
 
     meta = packageMeta;
+  };
+
+  ndtypes-docs = pkgs.stdenv.mkDerivation {
+    name = "ndtypes-docs";
+
+    src = ndtypesSrc;
+
+    buildInputs = with pythonPackages; [ sphinx_rtd_theme sphinx ndtypes ];
+
+    buildPhase = ''
+      cd doc
+      make doctest
+      # output.txt gets added to html from doctest
+      rm build/html/output.txt
+      make html
+    '';
+
+    installPhase = ''
+      mkdir -p $out
+      cp -r build/html/* $out
+    '';
   };
 
 }
