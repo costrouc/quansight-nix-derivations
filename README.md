@@ -20,13 +20,14 @@ linux distributions, OpenBSD and darwin (OSX). It will not conflict
 with your package manager or system at all.
 
 These repository builds make one assumption about the layout of the
-repositories. It expects a flat hierarchy. In the future I can add git
-support to use "master".
+repositories. It expects a flat hierarchy shown below. In the future I
+can add git support to use "master".
 
 ```
 ...
 |-- quansight-nix/
 |-- xnd/
+|-- xndtools/
 |-- gumath/
 |-- ndtypes/
 |-- uarray/
@@ -39,10 +40,10 @@ Available attributes can be found in `default.nix`. I will do my best
 to keep the following list up to date. By default all packages are run
 with all tests.
 
- - `libndtypes`, `ndtypes`
- - `libxnd`, `xnd` 
- - `libgumath`, `gumath`
- - `uarray`
+ - `libndtypes`, `ndtypes`, `ndtypes-docs`
+ - `libxnd`, `xnd`, `xnd-docs`
+ - `libgumath`, `gumath`, `gumath-docs`
+ - `uarray`, `uarray-docs`
 
 Building a package is as simple as
 
