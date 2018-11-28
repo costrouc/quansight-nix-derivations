@@ -44,10 +44,12 @@ with all tests.
  - `libxnd`, `xnd`, `xnd-docs`
  - `libgumath`, `gumath`, `gumath-docs`
  - `uarray`, `uarray-docs`
+ - `xndtools` (not complete), `xndtools-docs`
 
-Building a package is as simple as
+Building a package includes running all tests. It is as simple as
 
 ```shell
 nix-build -A xnd
 ```
+
 
