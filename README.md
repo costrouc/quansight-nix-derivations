@@ -25,12 +25,15 @@ can add git support to use "master".
 
 ```
 ...
-|-- quansight-nix/
-|-- xnd/
-|-- xndtools/
 |-- gumath/
+|-- mtypes/
 |-- ndtypes/
+|-- numba-xnd/
+|-- quansight-nix/
 |-- uarray/
+|-- xnd/
+|-- xndframes/
+|-- xndtools/
 ...
 ```
 
@@ -40,13 +43,14 @@ Available attributes can be found in `default.nix`. I will do my best
 to keep the following list up to date. By default all packages are run
 with all tests.
 
+ - `libgumath`, `gumath`, `gumath-docs`
  - `libndtypes`, `ndtypes`, `ndtypes-docs`
  - `libxnd`, `xnd`, `xnd-docs`
- - `libgumath`, `gumath`, `gumath-docs`
- - `uarray`, `uarray-docs`
- - `xndtools` (broken), `xndtools-docs`
  - `mtypes` (broken)
  - `numba-xnd` (broken)
+ - `uarray`, `uarray-docs`
+ - `xndframes` (broken), `xndframes-docs` (depends on xndframes)
+ - `xndtools` (broken), `xndtools-docs`
 
 Building a package includes running all tests. It is as simple as
 

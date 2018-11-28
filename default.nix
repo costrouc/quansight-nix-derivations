@@ -13,4 +13,5 @@ in
   (import ./pkgs/numba-xnd.nix  { inherit pkgs pythonPackages; }) //
   (import ./pkgs/uarray.nix     { inherit pkgs pythonPackages; }) //
   (import ./pkgs/xnd.nix        { inherit pkgs pythonPackages; }) //
+  (import ./pkgs/xndframes.nix  { inherit pkgs pythonPackages; }) //
   (import ./pkgs/xndtools.nix   { inherit pkgs pythonPackages; })
