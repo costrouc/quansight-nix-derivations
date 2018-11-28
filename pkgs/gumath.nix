@@ -43,17 +43,38 @@ rec {
 
     postPatch = ''
       substituteInPlace setup.py \
-        --replace 'include_dirs = ["libgumath", "ndtypes/python/ndtypes", "xnd/python/xnd"] + INCLUDES' \
-                  'include_dirs = ["${ndtypesBuild.libndtypes}/include", "${xndBuild.libxnd}/include", "${libgumath}/include"]' \
-        --replace 'library_dirs = ["libgumath", "ndtypes/libndtypes", "xnd/libxnd"] + LIBS' \
-                  'library_dirs = ["${ndtypesBuild.libndtypes}/lib", "${xndBuild.libxnd}/lib", "${libgumath}/lib"]' \
-        --replace 'runtime_library_dirs = ["$ORIGIN"]' \
-                  'runtime_library_dirs = ["${ndtypesBuild.libndtypes}/lib", "${xndBuild.libxnd}/lib", "${libgumath}/lib"]'
+        --replace 'add_include_dirs = [".", "libgumath", "ndtypes/python/ndtypes", "xnd/python/xnd"] + INCLUDES' \
+                  'add_include_dirs = [".", "${ndtypesBuild.libndtypes}/include", "${xndBuild.libxnd}/include", "${libgumath}/include"]' \
+        --replace 'add_library_dirs = ["libgumath", "ndtypes/libndtypes", "xnd/libxnd"] + LIBS' \
+                  'add_library_dirs = ["${ndtypesBuild.libndtypes}/lib", "${xndBuild.libxnd}/lib", "${libgumath}/lib"]' \
+        --replace 'add_runtime_library_dirs = ["$ORIGIN"]' \
+                  'add_runtime_library_dirs = ["${ndtypesBuild.libndtypes}/lib", "${xndBuild.libxnd}/lib", "${libgumath}/lib"]'
     '';
 
     doCheck = true;
 
     meta = packageMeta;
+  };
+
+  gumath-docs = pkgs.stdenv.mkDerivation {
+    name = "gumath-docs";
+
+    src = gumathSrc;
+
+    buildInputs = with pythonPackages; [ sphinx_rtd_theme sphinx ndtypesBuild.ndtypes xndBuild.xnd gumath ];
+
+    buildPhase = ''
+      cd doc
+      sphinx-build -b doctest -d build/doctrees . build/html
+      # output.txt gets added to html from doctest
+      rm build/html/output.txt
+      sphinx-build -b html -d build/doctrees . build/html
+    '';
+
+    installPhase = ''
+      mkdir -p $out
+      cp -r build/html/* $out
+    '';
   };
 
 }
