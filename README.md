@@ -44,8 +44,8 @@ with all tests.
  - `libxnd`, `xnd`, `xnd-docs`
  - `libgumath`, `gumath`, `gumath-docs`
  - `uarray`, `uarray-docs`
- - `xndtools` (not complete), `xndtools-docs`
- - `mtypes`
+ - `xndtools` (broken), `xndtools-docs`
+ - `mtypes` (broken)
 
 Building a package includes running all tests. It is as simple as
 
