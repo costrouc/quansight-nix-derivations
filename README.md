@@ -46,6 +46,7 @@ with all tests.
  - `uarray`, `uarray-docs`
  - `xndtools` (broken), `xndtools-docs`
  - `mtypes` (broken)
+ - `numba-xnd` (broken)
 
 Building a package includes running all tests. It is as simple as
 
