@@ -63,4 +63,25 @@ rec {
     meta = packageMeta;
   };
 
+  xnd-docs = pkgs.stdenv.mkDerivation {
+    name = "xnd-docs";
+
+    src = xndSrc;
+
+    buildInputs = with pythonPackages; [ sphinx_rtd_theme sphinx ndtypesBuild.ndtypes xnd ];
+
+    buildPhase = ''
+      cd doc
+      make doctest
+      # output.txt gets added to html from doctest
+      rm build/html/output.txt
+      make html
+    '';
+
+    installPhase = ''
+      mkdir -p $out
+      cp -r build/html/* $out
+    '';
+  };
+
 }
