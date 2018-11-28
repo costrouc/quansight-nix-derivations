@@ -53,6 +53,11 @@ rec {
 
     doCheck = true;
 
+    postInstall = ''
+      mkdir $out/include
+      cp python/gumath/*.h $out/include
+    '';
+
     meta = packageMeta;
   };
 
