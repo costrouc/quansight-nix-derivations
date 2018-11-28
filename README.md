@@ -45,6 +45,7 @@ with all tests.
  - `libgumath`, `gumath`, `gumath-docs`
  - `uarray`, `uarray-docs`
  - `xndtools` (not complete), `xndtools-docs`
+ - `mtypes`
 
 Building a package includes running all tests. It is as simple as
 
