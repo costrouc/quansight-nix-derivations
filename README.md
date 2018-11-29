@@ -70,7 +70,7 @@ with all tests.
  - `numba-xnd` (broken), `numba-xnd-dev.shell` (broken), `numba-xnd-dev.docker` (broken) 
  - `uarray`, `uarray-docs`, `uarray-dev.docker`, `uarray-dev.shell`
  - `xndframes` (broken), `xndframes-docs` (depends on xndframes)
- - `xndtools` (broken), `xndtools-docs`
+ - `xndtools`, `xndtools-docs`, `xndtools-dev.shell`
 
 ## Packages
 

@@ -1,5 +1,8 @@
 { stdenv
 , pythonPackages
+, libndtypes
+, libxnd
+, libgumath
 , ndtypes
 , xnd
 , gumath
@@ -13,7 +16,7 @@ pythonPackages.buildPythonPackage rec {
              !elem (baseNameOf path) [".git"])
           ../../../xndtools;
 
-  buildInputs = with pythonPackages; [ pytestrunner ];
+  buildInputs = with pythonPackages; [ pytestrunner libndtypes libxnd libgumath ];
   checkInputs = with pythonPackages; [ pytest ];
   propagatedBuildInputs = [ ndtypes xnd gumath ];
 
@@ -21,7 +24,6 @@ pythonPackages.buildPythonPackage rec {
     description = "Development tools for the XND project";
     homepage = https://github.com/plures/xndtools;
     license = licenses.bsd3;
-    # broken = true;
   };
 
 }

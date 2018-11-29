@@ -56,6 +56,8 @@ let
 
     xndtools = callPackage ./pkgs/xndtools/python.nix { };
 
+    xndtools-dev = callPackage ./pkgs/xndtools/dev.nix { };
+
     xndtools-docs = callPackage ./pkgs/xndtools/docs.nix { };
 
   };
