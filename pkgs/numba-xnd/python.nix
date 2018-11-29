@@ -24,7 +24,7 @@ pythonPackages.buildPythonPackage rec {
   postPatch = ''
     substituteInPlace structinfo_config.py \
       --replace 'include_dirs = lib_dirs + [include_dir]' \
-                'include_dirs = [ "${libndtypes}/include", "${libxnd}/include", "${libgumath}/include", "${ndtypes}/include/ndtypes", "${xnd}/include/xnd", "${gumath}/include/gumath" ]' \
+      'include_dirs = ["${libndtypes}/include", "${libxnd}/include", "${libgumath}/include", "${ndtypes}/include/ndtypes", "${xnd}/include/xnd", "${gumath}/include/gumath", "${pythonPackages.numba}/${pythonPackages.python.sitePackages}/numba/runtime"]' \
       --replace 'library_dirs = [site_packages[: site_packages.find("/python")]]' \
                 'library_dirs = [ "${libndtypes}/lib", "${libxnd}/lib", "${libgumath}/lib" ]' \
   '';
