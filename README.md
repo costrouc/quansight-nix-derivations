@@ -82,9 +82,24 @@ simple as
 nix-build -A xnd
 ```
 
+We are not limited to python packages. We can also build documentation
+for a project.
+
+```shell
+nix-build -A xnd-docs
+firefox result/index.html
+```
+
+Or we can build some latex papers needed for `uarray`.
+
+```shell
+nix-build -A uarray-docs
+ls result # several pdfs generated
+```
+
 ## Interactive virtualenv
 
-Testing out a package can be done with nix shell with usually a `-dev`
+Trying out a package can be done with nix shell with usually a `-dev`
 at the end with several attributes that you can look up. The `shell`
 attribute will create a TRUE virtualenv with the package that you can
 interact with.
