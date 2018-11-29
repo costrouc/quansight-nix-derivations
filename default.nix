@@ -36,7 +36,9 @@ let
 
     ndtypes-docs = callPackage ./pkgs/ndtypes/docs.nix { };
 
-    numba-xnd = callPackage ./pkgs/numba-xnd.nix { };
+    numba-xnd = callPackage ./pkgs/numba-xnd/python.nix { };
+
+    numba-xnd-dev = callPackage ./pkgs/numba-xnd/dev.nix { };
 
     uarray = callPackage ./pkgs/uarray/python.nix { };
 

@@ -15,7 +15,7 @@ pythonPackages.buildPythonPackage rec {
   src = with builtins; filterSource
       (path: _:
          !elem (baseNameOf path) [".git"])
-      ../../numba-xnd;
+      ../../../numba-xnd;
 
   propagatedBuildInputs = [ pythonPackages.numpy pythonPackages.llvmlite pythonPackages.argparse xnd gumath ]
      ++ stdenv.lib.optional (!pythonPackages.isPy3k) pythonPackages.funcsigs
@@ -24,7 +24,7 @@ pythonPackages.buildPythonPackage rec {
   postPatch = ''
     substituteInPlace structinfo_config.py \
       --replace 'include_dirs = lib_dirs + [include_dir]' \
-                'include_dirs = [ "${libndtypes}/include", "${libxnd}/include", "${libgumath}/include", "${ndtypes}/include", "${xnd}/include", "${gumath}/include" ]' \
+                'include_dirs = [ "${libndtypes}/include", "${libxnd}/include", "${libgumath}/include", "${ndtypes}/include/ndtypes", "${xnd}/include/xnd", "${gumath}/include/gumath" ]' \
       --replace 'library_dirs = [site_packages[: site_packages.find("/python")]]' \
                 'library_dirs = [ "${libndtypes}/lib", "${libxnd}/lib", "${libgumath}/lib" ]' \
   '';

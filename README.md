@@ -67,7 +67,7 @@ with all tests.
  - `libndtypes`, `ndtypes`, `ndtypes-docs`
  - `libxnd`, `xnd`, `xnd-docs`
  - `mtypes` (broken)
- - `numba-xnd` (broken)
+ - `numba-xnd` (broken), `numba-xnd-dev.shell` (broken), `numba-xnd-dev.docker` (broken) 
  - `uarray`, `uarray-docs`, `uarray-dev.docker`, `uarray-dev.shell`
  - `xndframes` (broken), `xndframes-docs` (depends on xndframes)
  - `xndtools` (broken), `xndtools-docs`
