@@ -4,7 +4,7 @@ let
   # pinning nixpkgs for fully deterministic builds
   # https://vaibhavsagar.com/blog/2018/05/27/quick-easy-nixpkgs-pinning/
   nixpkgs = import (builtins.fetchTarball {
-    url = "https://github.com/costrouc/nixpkgs/archive/7b77c7ff9332c68c24f2cfb72ba716a2b89915e1.tar.gz";
+    url = "https://github.com/nixos/nixpkgs/archive/7b77c7ff9332c68c24f2cfb72ba716a2b89915e1.tar.gz";
     sha256 = "1pxm5817s5a6k3bb2fpxb9323y922i46y6rrv5bccxc2zkwrfp2a";
   }) { };
   allPkgs = nixpkgs // pkgs;
@@ -20,7 +20,7 @@ let
 
     gumath = callPackage ./pkgs/gumath/python.nix { };
 
-    gumath-docker = callPackage ./pkgs/gumath/docker.nix { };
+    gumath-dev = callPackage ./pkgs/gumath/dev.nix { };
 
     gumath-docs = callPackage ./pkgs/gumath/docs.nix { };
 
@@ -39,6 +39,8 @@ let
     numba-xnd = callPackage ./pkgs/numba-xnd.nix { };
 
     uarray = callPackage ./pkgs/uarray/python.nix { };
+
+    uarray-dev = callPackage ./pkgs/uarray/dev.nix { };
 
     uarray-docs = callPackage ./pkgs/uarray/docs.nix { };
 
