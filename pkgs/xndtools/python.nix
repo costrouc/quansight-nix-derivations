@@ -11,7 +11,7 @@ pythonPackages.buildPythonPackage rec {
   src = with builtins; filterSource
           (path: _:
              !elem (baseNameOf path) [".git"])
-          ../../../xndframes;
+          ../../../xndtools;
 
   buildInputs = with pythonPackages; [ pytestrunner ];
   checkInputs = with pythonPackages; [ pytest ];
@@ -21,7 +21,7 @@ pythonPackages.buildPythonPackage rec {
     description = "Development tools for the XND project";
     homepage = https://github.com/plures/xndtools;
     license = licenses.bsd3;
-    broken = true;
+    # broken = true;
   };
 
 }
