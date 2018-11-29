@@ -1,4 +1,4 @@
-{ pythonVersion ? "37" }:
+{ pythonVersion ? "37", useLocal ? true }:
 
 let
   # pinning nixpkgs for fully deterministic builds
