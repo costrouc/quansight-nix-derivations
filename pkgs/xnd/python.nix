@@ -6,6 +6,7 @@
 
 pythonPackages.buildPythonPackage {
   name = "xnd";
+  disabled = pythonPackages.pythonOlder "3.6";
 
   src = libxnd.src;
 

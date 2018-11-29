@@ -4,6 +4,7 @@
 
 pythonPackages.buildPythonPackage {
   name = "ndtypes";
+  disabled = pythonPackages.pythonOlder "3.6";
 
   src = libndtypes.src;
 

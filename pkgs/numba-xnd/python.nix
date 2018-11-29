@@ -8,7 +8,6 @@
 , libgumath
 }:
 
-
 pythonPackages.buildPythonPackage rec {
   name = "numba-xnd";
 

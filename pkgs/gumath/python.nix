@@ -8,6 +8,7 @@
 
 pythonPackages.buildPythonPackage {
   name = "gumath";
+  disabled = pythonPackages.pythonOlder "3.6";
 
   src = libgumath.src;
 

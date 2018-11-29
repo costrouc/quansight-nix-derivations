@@ -4,6 +4,7 @@
 
 pythonPackages.buildPythonPackage rec {
   name = "uarray";
+  disabled = pythonPackages.pythonOlder "3.7";
   format = "flit";
 
   src = with builtins; filterSource
