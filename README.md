@@ -37,6 +37,24 @@ can add git support to use "master".
 ...
 ```
 
+# Deterministic
+
+Nixpkgs pinning is used to **guarantee** the same builds between
+developers. I mean it. You can now expect that if it builds on `linux
+x86_64` it will build on any machine of the same architecture and
+distribution. In order to upgrade the packages you will need to
+increment to a new [nixpkgs commit](https://github.com/nixos/nixpkgs)
+sha256. Dont worry about the sha256 just change the last letter and
+nix will complain that the shas don't match and provide the expected
+sha. There are other ways but this is the easiest.
+
+```nix
+  nixpkgs = import (builtins.fetchTarball {
+    url = "https://github.com/costrouc/nixpkgs/archive/7b77c7ff9332c68c24f2cfb72ba716a2b89915e1.tar.gz";
+    sha256 = "1pxm5817s5a6k3bb2fpxb9323y922i46y6rrv5bccxc2zkwrfp2a";
+  }) { };
+```
+
 # Usage
 
 Available attributes can be found in `default.nix`. I will do my best

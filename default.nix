@@ -1,14 +1,21 @@
 { pythonVersion ? "37" }:
 
 let
+  # pinning nixpkgs for fully deterministic builds
+  # https://vaibhavsagar.com/blog/2018/05/27/quick-easy-nixpkgs-pinning/
+  nixpkgs = import (builtins.fetchTarball {
+    url = "https://github.com/costrouc/nixpkgs/archive/7b77c7ff9332c68c24f2cfb72ba716a2b89915e1.tar.gz";
+    sha256 = "1pxm5817s5a6k3bb2fpxb9323y922i46y6rrv5bccxc2zkwrfp2a";
+  }) { };
+  allPkgs = nixpkgs // pkgs;
+
   # call package design pattern
   # https://lethalman.blogspot.com/2014/09/nix-pill-13-callpackage-design-pattern.html
-  nixpkgs = import <nixpkgs> {};
-  allPkgs = nixpkgs // pkgs;
   callPackage = path: overrides:
     let f = import path;
     in f ((builtins.intersectAttrs (builtins.functionArgs f) allPkgs) // overrides);
   pkgs = with nixpkgs; {
+    # set python package version used for all builds
     pythonPackages = builtins.getAttr "python${pythonVersion}Packages" nixpkgs;
 
     gumath = callPackage ./pkgs/gumath/python.nix { };
