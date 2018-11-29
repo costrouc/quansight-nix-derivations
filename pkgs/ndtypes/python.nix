@@ -20,8 +20,8 @@ pythonPackages.buildPythonPackage {
   '';
 
   postInstall = ''
-    mkdir $out/include
-    cp python/ndtypes/*.h $out/include
+    mkdir -p $out/include/ndtypes
+    cp python/ndtypes/*.h $out/include/ndtypes
   '';
 
   meta = libndtypes.meta;

@@ -20,6 +20,8 @@ let
 
     gumath = callPackage ./pkgs/gumath/python.nix { };
 
+    gumath-docker = callPackage ./pkgs/gumath/docker.nix { };
+
     gumath-docs = callPackage ./pkgs/gumath/docs.nix { };
 
     libgumath = callPackage ./pkgs/gumath/library.nix { };
