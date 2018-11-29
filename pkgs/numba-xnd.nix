@@ -1,36 +1,38 @@
-{ pkgs ? import <nixpkgs> { }, pythonPackages ? pkgs.python3Packages }:
+{ stdenv
+, pythonPackages
+, ndtypes
+, xnd
+, gumath
+, libndtypes
+, libxnd
+, libgumath
+}:
 
-let numbaxndSrc = with builtins; filterSource
-        (path: _:
-           !elem (baseNameOf path) [".git"])
-        ../../numba-xnd;
 
-    ndtypesBuild = import ./ndtypes.nix { };
-    xndBuild = import ./xnd.nix { };
-    gumathBuild = import ./gumath.nix { };
-in {
-  numba-xnd = pythonPackages.buildPythonPackage rec {
-    name = "numba-xnd";
+pythonPackages.buildPythonPackage rec {
+  name = "numba-xnd";
 
-    src = numbaxndSrc;
+  src = with builtins; filterSource
+      (path: _:
+         !elem (baseNameOf path) [".git"])
+      ../../numba-xnd;
 
-    propagatedBuildInputs = with pythonPackages; [numpy llvmlite argparse xndBuild.xnd gumathBuild.gumath ]
-       ++ pkgs.stdenv.lib.optional (!isPy3k) funcsigs
-       ++ pkgs.stdenv.lib.optional (isPy27 || isPy33) singledispatch;
+  propagatedBuildInputs = [ pythonPackages.numpy pythonPackages.llvmlite pythonPackages.argparse xnd gumath ]
+     ++ stdenv.lib.optional (!pythonPackages.isPy3k) pythonPackages.funcsigs
+     ++ stdenv.lib.optional (pythonPackages.isPy27 || pythonPackages.isPy33) pythonPackages.singledispatch;
 
-    postPatch = ''
-      substituteInPlace structinfo_config.py \
-        --replace 'include_dirs = lib_dirs + [include_dir]' \
-                  'include_dirs = [ "${ndtypesBuild.libndtypes}/include", "${xndBuild.libxnd}/include", "${gumathBuild.libgumath}/include", "${ndtypesBuild.ndtypes}/include", "${xndBuild.xnd}/include", "${gumathBuild.gumath}/include" ]' \
-        --replace 'library_dirs = [site_packages[: site_packages.find("/python")]]' \
-                  'library_dirs = [ "${ndtypesBuild.libndtypes}/lib", "${xndBuild.libxnd}/lib", "${gumathBuild.libgumath}/lib" ]' \
-    '';
+  postPatch = ''
+    substituteInPlace structinfo_config.py \
+      --replace 'include_dirs = lib_dirs + [include_dir]' \
+                'include_dirs = [ "${libndtypes}/include", "${libxnd}/include", "${libgumath}/include", "${ndtypes}/include", "${xnd}/include", "${gumath}/include" ]' \
+      --replace 'library_dirs = [site_packages[: site_packages.find("/python")]]' \
+                'library_dirs = [ "${libndtypes}/lib", "${libxnd}/lib", "${libgumath}/lib" ]' \
+  '';
 
-    meta = with pkgs.lib; {
-      description = "Integrating xnd into numba";
-      homepage = https://github.com/Quansight-Labs/numba-xnd;
-      license = licenses.bsd3;
-      broken = true;
-    };
+  meta = with stdenv.lib; {
+    description = "Integrating xnd into numba";
+    homepage = https://github.com/Quansight-Labs/numba-xnd;
+    license = licenses.bsd3;
+    # broken = true;
   };
 }
