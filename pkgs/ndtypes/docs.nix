@@ -1,12 +1,18 @@
 { stdenv
+, devlib
 , pythonPackages
 , ndtypes
 }:
 
-stdenv.mkDerivation {
+stdenv.mkDerivation rec {
   name = "ndtypes-docs";
 
-  src = ndtypes.src;
+  src = devlib.devSrc {
+     inherit name;
+     url = https://github.com/plures/ndtypes/;
+     branch = "master";
+     localPath = ../../../ndtypes;
+  };
 
   buildInputs = with pythonPackages; [ sphinx_rtd_theme sphinx ndtypes ];
 

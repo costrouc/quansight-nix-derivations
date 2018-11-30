@@ -1,14 +1,20 @@
 { stdenv
+, devlib
 , pythonPackages
 , ndtypes
 , xnd
 , gumath
 }:
 
-stdenv.mkDerivation {
+stdenv.mkDerivation rec {
   name = "gumath-docs";
 
-  src = gumath.src;
+  src = devlib.devSrc {
+     inherit name;
+     url = https://github.com/plures/gumath/;
+     branch = "master";
+     localPath = ../../../gumath;
+  };
 
   buildInputs = [
     pythonPackages.sphinx_rtd_theme pythonPackages.sphinx

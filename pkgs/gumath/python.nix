@@ -1,4 +1,5 @@
 { pythonPackages
+, devlib
 , libndtypes
 , libxnd
 , libgumath
@@ -6,11 +7,16 @@
 , xnd
 }:
 
-pythonPackages.buildPythonPackage {
+pythonPackages.buildPythonPackage rec {
   name = "gumath";
   disabled = pythonPackages.pythonOlder "3.6";
 
-  src = libgumath.src;
+  src = devlib.devSrc {
+     inherit name;
+     url = https://github.com/plures/gumath/;
+     branch = "master";
+     localPath = ../../../gumath;
+  };
 
   checkInputs = [ pythonPackages.numba ];
   propagatedBuildInputs = [ ndtypes xnd ];

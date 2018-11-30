@@ -1,13 +1,19 @@
 { stdenv
+, devlib
 , pythonPackages
 , xnd
 , ndtypes
 }:
 
-stdenv.mkDerivation {
+stdenv.mkDerivation rec {
   name = "xnd-docs";
 
-  src = xnd.src;
+  src = devlib.devSrc {
+     inherit name;
+     url = https://github.com/plures/xnd/;
+     branch = "master";
+     localPath = ../../../xnd;
+  };
 
   buildInputs = with pythonPackages; [
     pythonPackages.sphinx_rtd_theme pythonPackages.sphinx

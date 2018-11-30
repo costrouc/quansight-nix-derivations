@@ -1,12 +1,18 @@
-{ pythonPackages
+{ devlib
+, pythonPackages
 , libndtypes
 }:
 
-pythonPackages.buildPythonPackage {
+pythonPackages.buildPythonPackage rec {
   name = "ndtypes";
   disabled = pythonPackages.pythonOlder "3.6";
 
-  src = libndtypes.src;
+  src = devlib.devSrc {
+     inherit name;
+     url = https://github.com/plures/ndtypes/;
+     branch = "master";
+     localPath = ../../../ndtypes;
+  };
 
   propagatedBuildInputs = [ pythonPackages.numpy ];
 

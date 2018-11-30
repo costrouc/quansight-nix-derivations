@@ -1,12 +1,18 @@
-{ stdenv }:
+{ stdenv
+, devlib
+, localSrcOverrides
+, defaultSrc
+}:
 
-stdenv.mkDerivation {
+stdenv.mkDerivation rec {
   name = "libndtypes";
 
-  src = with builtins; filterSource
-        (path: _:
-           !elem (baseNameOf path) [".git"])
-        ../../../ndtypes;
+  src = devlib.devSrc {
+     inherit name;
+     url = https://github.com/plures/ndtypes/;
+     branch = "master";
+     localPath = ../../../ndtypes;
+  };
 
   # Override linker with cc (symlink to either gcc or clang)
   # Library expects to use cc for linking

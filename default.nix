@@ -1,4 +1,4 @@
-{ pythonVersion ? "37", useLocal ? true }:
+{ pythonVersion ? "37", localSrcOverrides ? "", defaultSrc ? "local" }:
 
 let
   # pinning nixpkgs for fully deterministic builds
@@ -15,8 +15,28 @@ let
     let f = import path;
     in f ((builtins.intersectAttrs (builtins.functionArgs f) allPkgs) // overrides);
   pkgs = with nixpkgs; {
-    # set python package version used for all builds
+    ## python package version used for all builds
+    # BE WARNED build cache only exists for python2Packages and python3Packages and their aliases (27, 37)
+    # Available attributes:
+    #  - python27Packages == python2Packages
+    #  - python35Packages, python36Packages, python37Packages == python3Packages
     pythonPackages = builtins.getAttr "python${pythonVersion}Packages" nixpkgs;
+
+    ## localPackages
+    # these are the packages you with to explicitely override
+    # to be built using local source in flat hierarchy
+    # must be comma separated list of packages
+    localSrcOverrides = lib.splitString "," localSrcOverrides;
+
+    ## default src to use
+    # available values see devlib.devSrc for implementation
+    #  - local   :: by default build all packages from local source
+    #  - repo    :: by default build all packages from git repository
+    #  - release :: by default build all packages from lastest release (not implemented)
+    inherit defaultSrc;
+
+    # inherit tools
+    devlib = callPackage ./lib/utils.nix { };
 
     gumath = callPackage ./pkgs/gumath/python.nix { };
 

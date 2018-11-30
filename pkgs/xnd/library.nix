@@ -1,14 +1,17 @@
 { stdenv
+, devlib
 , libndtypes
 }:
 
-stdenv.mkDerivation {
+stdenv.mkDerivation rec {
   name = "libxnd";
 
-  src = with builtins; filterSource
-        (path: _:
-           !elem (baseNameOf path) [".git"])
-        ../../../xnd;
+  src = devlib.devSrc {
+     inherit name;
+     url = https://github.com/plures/xnd/;
+     branch = "master";
+     localPath = ../../../xnd;
+  };
 
   buildInputs = [ libndtypes ];
 

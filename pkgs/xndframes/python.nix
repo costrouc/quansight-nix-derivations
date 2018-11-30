@@ -1,4 +1,5 @@
 { stdenv
+, devlib
 , pythonPackages
 , xnd
 }:
@@ -6,10 +7,12 @@
 pythonPackages.buildPythonPackage rec {
   name = "xndframes";
 
-  src = with builtins; filterSource
-          (path: _:
-             !elem (baseNameOf path) [".git"])
-          ../../../xndframes;
+  src = devlib.devSrc {
+     inherit name;
+     url = https://github.com/Quansight-Labs/xndframes;
+     branch = "master";
+     localPath = ../../../xndframes;
+  };
 
   buildInputs = with pythonPackages; [ pytestrunner ];
   checkInputs = with pythonPackages; [ pytest flake8 ];

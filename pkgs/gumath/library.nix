@@ -1,15 +1,18 @@
-{ stdenv
+{ devlib
+, stdenv
 , libndtypes
 , libxnd
 }:
 
-stdenv.mkDerivation {
+stdenv.mkDerivation rec {
   name = "libgumath";
 
-  src = with builtins; filterSource
-      (path: _:
-         !elem (baseNameOf path) [".git"])
-      ../../../gumath;
+  src = devlib.devSrc {
+     inherit name;
+     url = https://github.com/plures/gumath/;
+     branch = "master";
+     localPath = ../../../gumath;
+  };
 
   buildInputs = [ libndtypes libxnd ];
 

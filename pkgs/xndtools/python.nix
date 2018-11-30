@@ -1,4 +1,5 @@
 { stdenv
+, devlib
 , pythonPackages
 , libndtypes
 , libxnd
@@ -11,10 +12,12 @@
 pythonPackages.buildPythonPackage rec {
   name = "xndtools";
 
-  src = with builtins; filterSource
-          (path: _:
-             !elem (baseNameOf path) [".git"])
-          ../../../xndtools;
+  src = devlib.devSrc {
+     inherit name;
+     url = https://github.com/plures/xndtools;
+     branch = "master";
+     localPath = ../../../xndtools;
+  };
 
   buildInputs = with pythonPackages; [ pytestrunner libndtypes libxnd libgumath ];
   checkInputs = with pythonPackages; [ pytest ];

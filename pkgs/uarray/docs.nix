@@ -1,12 +1,16 @@
-{ pkgs }:
+{ pkgs
+, devlib
+}:
 
-pkgs.stdenv.mkDerivation {
+pkgs.stdenv.mkDerivation rec {
   name = "uarray-docs";
 
-  src = with builtins; filterSource
-        (path: _:
-           !elem (baseNameOf path) [".git"])
-        ../../../uarray-docs;
+  src = devlib.devSrc {
+     inherit name;
+     url = https://github.com/Quansight-Labs/uarray;
+     branch = "master";
+     localPath = ../../../uarray;
+  };
 
   buildInputs = [ pkgs.texlive.combined.scheme-full ];
 

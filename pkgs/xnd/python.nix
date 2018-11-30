@@ -1,14 +1,20 @@
 { pythonPackages
+, devlib
 , libndtypes
 , libxnd
 , ndtypes
 }:
 
-pythonPackages.buildPythonPackage {
+pythonPackages.buildPythonPackage rec {
   name = "xnd";
   disabled = pythonPackages.pythonOlder "3.6";
 
-  src = libxnd.src;
+  src = devlib.devSrc {
+     inherit name;
+     url = https://github.com/plures/xnd/;
+     branch = "master";
+     localPath = ../../../xnd;
+  };
 
   propagatedBuildInputs = [ ndtypes ];
 

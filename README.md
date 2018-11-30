@@ -1,5 +1,10 @@
 # Quansight Nix
 
+## Motivation
+
+XND and packages that use XND have a chain of dependencies where it is
+hard to develop one and understand the downstream changes. 
+
 This repository contains nix derivations for
 [Quansight](https://www.quansight.com/) projects along with
 definitions to help with development. For newcomers here are some
@@ -160,7 +165,7 @@ box.
 arguments of `pythonVersion` and `useLocal`. 
 
 ```nix
-{ pythonVersion ? "37", useLocal ? true }:
+{ pythonVersion ? "37", localSrcOverrides ? "", defaultSrc ? "local" }:
 
 {
   ...
@@ -168,11 +173,10 @@ arguments of `pythonVersion` and `useLocal`.
 ```
 
 These are convenience options to control the python version of the
-packages `pythonVersion` and if `useLocal` is true it looks for each
-package locally in a flat directory structure one below this
-repository. If `useLocal` is false it will use the master branch of
-each package on git (not implemented). Not sure of the ideal way to
-implement.
+packages (`pythonVersion`) and control the version of each package
+used (`localSrcOverrides` and `defaultSrc`).
+
+## Python Version
 
 The default version for Python is 3.7 as shown above. To
 build `xnd` for Python 3.6 execute the following.
@@ -180,3 +184,41 @@ build `xnd` for Python 3.6 execute the following.
 ```shell
 nix-build -A xnd --argstr pythonVersion 36
 ```
+
+## Chosing Source Location
+
+Often times we would like to build a package with our source code
+changes, build others based on the `master` of a git repository or
+possibly the lastest stable relase (e.g. `v1.0.1`). The options
+`localSrcOverrides` and `defaultSrc` allow us to control where the
+source comes from.
+
+`defaultSrc` sets the default src that all packages in
+`quansight-nix-derivations` will use. It has three options `local`,
+`repo`, and `release` (subject to change). Lets take an example.
+
+```shell
+nix-build -A xnd --argstr defaultSrc repo
+```
+
+This means that xnd will be built using the `master` branch for all
+quansight projects that it depends on (`libndtypes`, `ndtypes`, and
+`libxnd`). Yeah it is that simple. Setting `release` would mean that
+it will use the latest stable release for each quansight package it
+depends on. And lastly `local` means that it will be built using the
+local source code. In this case the following paths need to exist
+`../xnd` and `../ndtypes`. The default is `local`.
+
+What if we want to build our package with our local changes but use
+the latest stable release of all other packages? This case is where
+`localSrcOverrides` comes in. It allows you to specify which packages
+should be forced to build from our local source changes.
+
+```shell
+nix-build -A xnd --argstr defaultSrc release --argstr localSrcOverrides libndtypes,xnd
+```
+
+In this case `xnd` and `libndtypes` will be built with our local
+source code while `ndtypes` will be built with master on
+[plures/ndtypes](https://github.com/plures/ndtypes).
+

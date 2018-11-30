@@ -1,4 +1,5 @@
 { stdenv
+, devlib
 , pythonPackages
 , ndtypes
 , xnd
@@ -12,10 +13,12 @@
 pythonPackages.buildPythonPackage rec {
   name = "numba-xnd";
 
-  src = with builtins; filterSource
-      (path: _:
-         !elem (baseNameOf path) [".git"])
-      ../../../numba-xnd;
+  src = devlib.devSrc {
+     inherit name;
+     url = https://github.com/Quansight-Labs/numba-xnd;
+     branch = "master";
+     localPath = ../../../numba-xnd;
+  };
 
   buildInputs = [ xndtools ];
   propagatedBuildInputs = [ pythonPackages.numpy pythonPackages.llvmlite pythonPackages.argparse xnd gumath ]

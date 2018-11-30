@@ -1,14 +1,17 @@
 { stdenv
+, devlib
 , pythonPackages
 }:
 
 pythonPackages.buildPythonPackage rec {
   name = "mtypes";
 
-  src = with builtins; filterSource
-      (path: _:
-         !elem (baseNameOf path) [".git"])
-      ../../mtypes;
+  src = devlib.devSrc {
+     inherit name;
+     url = https://github.com/plures/xnd/;
+     branch = "master";
+     localPath = ../../mtypes;
+  };
 
   meta = with stdenv.lib; {
     description = "Memory Types for Python";
