@@ -1,8 +1,19 @@
 language: nix
 # cachix is used to cache builds
+# sadly there is boiler plate that has to be done
+# set secret env variable CACHIX_SIGNING_KEY
+
+matrix:
+  include:
+    - env: PYTHON_VERSION=36
+    - env: PYTHON_VERSION=37
+
 script:
+# (1) install cachix
   - nix-env -iA cachix -f https://github.com/NixOS/nixpkgs/tarball/889c72032f8595fcd7542c6032c208f6b8033db6
+# (2) enable cachix cache
   - cachix use quansight
+# (3) watch for builds needed for intermediate builds
   - cachix push quansight --watch-store&
-  - nix-build -A ndtypes --argstr defaultSrc repo | cachix push quansight
-  - nix-build -A uarray --argstr defaultSrc repo | cachix push quansight
+# (4) build and push result to cachix
+  - nix-build -A ndtypes --argstr pythonVersion $PYTHON_VERSION --argstr defaultSrc repo | cachix push quansight
