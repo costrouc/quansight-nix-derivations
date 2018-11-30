@@ -1,2 +1,7 @@
 language: nix
-script: nix-build -A ndtypes --argstr defaultSrc repo
+# cachix is used to cache builds
+script:
+  - nix-env -iA cachix -f https://github.com/NixOS/nixpkgs/tarball/889c72032f8595fcd7542c6032c208f6b8033db6
+  - cachix use quansight
+  - cachix push quansight --watch-store&
+  - nix-build -A ndtypes --argstr defaultSrc repo | cachix push quansight
