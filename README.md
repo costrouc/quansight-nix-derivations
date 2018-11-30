@@ -29,8 +29,8 @@ linux distributions, OpenBSD and darwin (OSX). It will not conflict
 with your package manager or system at all.
 
 This repository makes one assumption about the layout of the
-repositories. It expects a flat hierarchy shown below. In the future I
-can add git support to use "master".
+repositories. It expects a flat hierarchy shown below if you are going
+to do any local builds.
 
 ```
 ...
