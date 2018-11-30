@@ -164,7 +164,7 @@ box.
 # Options
 
 `default.nix` turns out to actually be a nix function with default
-arguments of `pythonVersion` and `useLocal`. 
+arguments of `pythonVersion`, `localSrcOverrides` and `defaultSrc`. 
 
 ```nix
 { pythonVersion ? "37", localSrcOverrides ? "", defaultSrc ? "local" }:
