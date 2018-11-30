@@ -1,5 +1,7 @@
 # Quansight Nix
 
+[![Build Status](https://travis-ci.org/costrouc/quansight-nix-derivations.svg?branch=master)](https://travis-ci.org/costrouc/quansight-nix-derivations)
+
 ## Motivation
 
 XND and packages that use XND have a chain of dependencies where it is
@@ -222,3 +224,48 @@ In this case `xnd` and `libndtypes` will be built with our local
 source code while `ndtypes` will be built with master on
 [plures/ndtypes](https://github.com/plures/ndtypes).
 
+# Continous Integration
+
+Continuous Integration tools become much easier to use with nix
+becuase you no longer have any dependencies that you have to install!
+Additionally nix handles all of the build dependency login for you. I
+chose travis in this example becuase it is commonly used. Nix will
+build packages from each derivation. Since these builds are
+deterministic we can cache the results. Thus we can also create CI now
+as a build tool. We will use one new service that have gained quite
+some traction in the nix community
+[cachix](https://cachix.org/). Cachix is a free service that will
+store the results of each build and all of it dependencies. So you
+never have to build the same package twice. This will dramatically
+save on build time.
+
+```yaml
+language: nix
+# cachix is used to cache builds
+# sadly there is boiler plate that has to be done
+# set secret env variable CACHIX_SIGNING_KEY
+
+matrix:
+  include:
+    - env: PYTHON_VERSION=36
+    - env: PYTHON_VERSION=37
+
+script:
+# (1) install cachix
+  - nix-env -iA cachix -f https://github.com/NixOS/nixpkgs/tarball/889c72032f8595fcd7542c6032c208f6b8033db6
+# (2) enable cachix cache
+  - cachix use quansight
+# (3) watch for builds needed for intermediate builds
+  - cachix push quansight --watch-store&
+# (4) build and push result to cachix
+  - nix-build -A ndtypes --argstr pythonVersion $PYTHON_VERSION --argstr defaultSrc repo | cachix push quansight
+```
+
+Since travis is now responsible for the builds and uploading them to
+cachix. We can use `travis` as our build server. If properly
+authenticated the following command will enable the cachix cache to be
+used on your machine.
+
+```bash
+cachix use quansight
+```
