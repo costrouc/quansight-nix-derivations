@@ -5,3 +5,4 @@ script:
   - cachix use quansight
   - cachix push quansight --watch-store&
   - nix-build -A ndtypes --argstr defaultSrc repo | cachix push quansight
+  - nix-build -A uarray --argstr defaultSrc repo | cachix push quansight
