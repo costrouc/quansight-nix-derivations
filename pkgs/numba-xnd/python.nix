@@ -21,7 +21,7 @@ pythonPackages.buildPythonPackage rec {
   };
 
   buildInputs = [ xndtools ];
-  propagatedBuildInputs = [ pythonPackages.numpy pythonPackages.llvmlite pythonPackages.argparse xnd gumath ]
+  propagatedBuildInputs = [ pythonPackages.numpy pythonPackages.llvmlite pythonPackages.argparse pythonPackages.numba xnd gumath ]
      ++ stdenv.lib.optional (!pythonPackages.isPy3k) pythonPackages.funcsigs
      ++ stdenv.lib.optional (pythonPackages.isPy27 || pythonPackages.isPy33) pythonPackages.singledispatch;
 
