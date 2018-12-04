@@ -4,8 +4,8 @@ let
   # pinning nixpkgs for fully deterministic builds
   # https://vaibhavsagar.com/blog/2018/05/27/quick-easy-nixpkgs-pinning/
   nixpkgs = import (builtins.fetchTarball {
-    url = "https://github.com/nixos/nixpkgs/archive/7b77c7ff9332c68c24f2cfb72ba716a2b89915e1.tar.gz";
-    sha256 = "1pxm5817s5a6k3bb2fpxb9323y922i46y6rrv5bccxc2zkwrfp2a";
+    url = "https://github.com/nixos/nixpkgs/archive/b6708d49af3c3da51fdddbe1bc2e30d5e0954dda.tar.gz";
+    sha256 = "0j2w72fqgnbhqwd82njv0d49c8i2sllps65vs82z9hksna5zh0m1";
   }) { };
   allPkgs = nixpkgs // pkgs;
 
