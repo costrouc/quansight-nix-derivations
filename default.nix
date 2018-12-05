@@ -38,6 +38,8 @@ let
     # inherit tools
     devlib = callPackage ./lib/utils.nix { };
 
+    ### Quansight Packages
+
     gumath = callPackage ./pkgs/gumath/python.nix { };
 
     gumath-dev = callPackage ./pkgs/gumath/dev.nix { };
@@ -79,6 +81,12 @@ let
     xndtools-dev = callPackage ./pkgs/xndtools/dev.nix { };
 
     xndtools-docs = callPackage ./pkgs/xndtools/docs.nix { };
+
+    ### Quansight Dependencies
+
+    matchpy = callPackage ./pkgs/dependencies/matchpy/python.nix { };
+
+    matchpy-dev = callPackage ./pkgs/dependencies/matchpy/dev.nix { };
 
   };
 in pkgs
