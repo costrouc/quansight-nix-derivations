@@ -52,7 +52,7 @@ let
 
     libxnd = callPackage ./pkgs/xnd/library.nix { };
 
-    mtypes = callPackage ./pkgs/mtypes.nix { };
+    mtypes = callPackage ./pkgs/mtypes { };
 
     ndtypes = callPackage ./pkgs/ndtypes/python.nix { };
 
@@ -67,6 +67,8 @@ let
     uarray-dev = callPackage ./pkgs/uarray/dev.nix { };
 
     uarray-docs = callPackage ./pkgs/uarray/docs.nix { };
+
+    umem = callPackage ./pkgs/umem { };
 
     xnd = callPackage ./pkgs/xnd/python.nix { };
 
