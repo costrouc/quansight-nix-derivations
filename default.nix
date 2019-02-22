@@ -3,9 +3,9 @@
 let
   # pinning nixpkgs for fully deterministic builds
   # https://vaibhavsagar.com/blog/2018/05/27/quick-easy-nixpkgs-pinning/
-  nixpkgs = import (builtins.fetchTarball {
-    url = "https://github.com/nixos/nixpkgs/archive/b6708d49af3c3da51fdddbe1bc2e30d5e0954dda.tar.gz";
-    sha256 = "0j2w72fqgnbhqwd82njv0d49c8i2sllps65vs82z9hksna5zh0m1";
+  nixpkgs = import (builtins.fetchGit {
+    url = "https://github.com/nixos/nixpkgs.git";
+    rev = "eebd1a9263716a04689a37b6537e50801d376b5e";
   }) { };
   allPkgs = nixpkgs // pkgs;
 
@@ -61,6 +61,8 @@ let
     numba-xnd = callPackage ./pkgs/numba-xnd/python.nix { };
 
     numba-xnd-dev = callPackage ./pkgs/numba-xnd/dev.nix { };
+
+    psi-compiler = callPackage ./pkgs/psi-compiler { };
 
     uarray = callPackage ./pkgs/uarray/python.nix { };
 
