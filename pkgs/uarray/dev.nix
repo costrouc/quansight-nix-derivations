@@ -8,7 +8,10 @@ let pythonEnv = pythonPackages.python.withPackages
 in {
 
  shell = pkgs.mkShell {
-   buildInputs = [ pythonEnv ];
+   buildInputs = [
+     uarray
+     pythonPackages.graphviz pythonPackages.jupyterlab
+   ];
  };
 
  # nix is THE way to build docker images

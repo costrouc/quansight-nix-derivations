@@ -16,17 +16,16 @@ pythonPackages.buildPythonPackage rec {
   };
 
   checkInputs = with pythonPackages; [
-    pytest nbval pytestcov numba mypy
+    pytest pytestcov nbval numpy mypy hypothesis
   ];
 
   propagatedBuildInputs = with pythonPackages; [
-    matchpy numpy astunparse typing-extensions black
+    matchpy numpy numba astunparse typing-extensions black ply graphviz
   ];
 
   checkPhase = ''
-    mypy uarray
-    ${pythonPackages.python.interpreter} extract_readme_tests.py
-    pytest
+    # mypy uarray
+    pytest uarray/parser
   '';
 
   meta = with stdenv.lib; {
