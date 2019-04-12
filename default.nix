@@ -4,8 +4,8 @@ let
   # pinning nixpkgs for fully deterministic builds
   # https://vaibhavsagar.com/blog/2018/05/27/quick-easy-nixpkgs-pinning/
   nixpkgs = import (builtins.fetchGit {
-    url = "https://github.com/nixos/nixpkgs.git";
-    rev = "eebd1a9263716a04689a37b6537e50801d376b5e";
+    url = "git://github.com/costrouc/nixpkgs";
+    ref = "python-lektor-upgrade";
   }) { };
   allPkgs = nixpkgs // pkgs;
 
@@ -86,11 +86,15 @@ let
 
     xndtools-docs = callPackage ./pkgs/xndtools/docs.nix { };
 
+    quansight-labs-site = callPackage ./pkgs/quansight-labs-site { };
+
     ### Quansight Dependencies
 
     matchpy = callPackage ./pkgs/dependencies/matchpy/python.nix { };
 
     matchpy-dev = callPackage ./pkgs/dependencies/matchpy/dev.nix { };
+
+    numpy = callPackage ./pkgs/dependencies/numpy/python.nix { blas = nixpkgs.openblas; };
 
   };
 in pkgs
