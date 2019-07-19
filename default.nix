@@ -3,9 +3,9 @@
 let
   # pinning nixpkgs for fully deterministic builds
   # https://vaibhavsagar.com/blog/2018/05/27/quick-easy-nixpkgs-pinning/
-  nixpkgs = import (builtins.fetchGit {
-    url = "git://github.com/costrouc/nixpkgs";
-    ref = "python-lektor-upgrade";
+  nixpkgs = import (builtins.fetchTarball {
+    url = "https://github.com/NixOS/nixpkgs/archive/589dd21f4e363c1cd56a4f795ff8c480cca4b7f4.tar.gz";
+    sha256 = "0ph2f3prbl0j3qnzk7jiaky6rkspkbpirr1b07flqrfj07l4kr3w";
   }) { };
   allPkgs = nixpkgs // pkgs;
 
